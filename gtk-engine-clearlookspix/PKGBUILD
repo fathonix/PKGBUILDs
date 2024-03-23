@@ -1,0 +1,28 @@
+pkgname=gtk-engine-clearlookspix
+debname=gtk2-engines-clearlookspix
+pkgver=2.20.8
+pkgrel=1
+pkgdesc='clearlookspix theme for GTK+ 2.x'
+arch=('aarch64')
+url='http://raspberrypi.org'
+license=('GPL2')
+depends=('gtk2')
+makedepends=('intltool' 'perl-xml-parser')
+source=("http://archive.raspberrypi.org/debian/pool/main/${debname::1}/${debname}/${debname}_${pkgver}.tar.xz")
+sha256sums=('aadd77ac4aa4161e76278da429c39538bb0fa721b4d9a59e933d13c936472bfb')
+
+prepare() {
+   cd "${srcdir}/${debname}-${pkgver}"
+   autoreconf -i -f
+   ./configure --prefix=/usr --libdir=/usr/lib
+}
+
+build () {
+   cd "${srcdir}/${debname}-${pkgver}"
+   make
+}
+
+package() {
+   cd "${srcdir}/${debname}-${pkgver}"
+   make DESTDIR="${pkgdir}" install
+}

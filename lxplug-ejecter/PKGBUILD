@@ -1,0 +1,27 @@
+pkgname=lxplug-ejecter
+pkgver=0.16
+pkgrel=1
+pkgdesc='Ejecter plugin for lxpanel'
+arch=('aarch64')
+url='http://raspberrypi.org'
+license=('GPL2')
+depends=('gtk3' 'lxpanel-gtk3' 'lxmenu-data' 'libfm-gtk3')
+makedepends=('intltool' 'libwnck3')
+source=("http://archive.raspberrypi.org/debian/pool/main/${pkgname::1}/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+sha256sums=('2a6f9f0770b4b7fea259681db232ea0a07fa538e759249c5acf60595482edb28')
+
+prepare() {
+   cd "${srcdir}/${pkgname}"
+   ./autogen.sh
+   ./configure --prefix=/usr
+}
+
+build () {
+   cd "${srcdir}/${pkgname}"
+   make
+}
+
+package() {
+   cd "${srcdir}/${pkgname}"
+   make DESTDIR="${pkgdir}" install
+}

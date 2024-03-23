@@ -1,0 +1,28 @@
+pkgname=pishutdown
+pkgver=0.16
+pkgrel=1
+pkgdesc='Desktop shutdown helper for Raspberry Pi'
+arch=('aarch64')
+url='http://raspberrypi.org'
+license=('GPL2')
+depends=('gtk3' 'procps')
+makedepends=('intltool')
+source=("http://archive.raspberrypi.org/debian/pool/main/${pkgname::1}/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+sha256sums=('39645d3eb919f59acd54a168ccf1529bcd98ec87f5c88fad9e12143f5ba36b80')
+
+prepare() {
+   cd "${srcdir}/${pkgname}"
+   sed -i '/AC_CONFIG_MACRO_DIR(\[m4\])/d' configure.ac
+   ./autogen.sh
+   ./configure --prefix=/usr
+}
+
+build () {
+   cd "${srcdir}/${pkgname}"
+   make
+}
+
+package() {
+   cd "${srcdir}/${pkgname}"
+   make DESTDIR="${pkgdir}" install
+}

@@ -1,0 +1,14 @@
+pkgname=rpd-wallpaper
+pkgver=0.4
+pkgrel=1
+pkgdesc='Wallpaper for Raspberry Pi Desktop'
+arch=('any')
+url='http://raspberrypi.org'
+license=('custom')
+source=("http://archive.raspberrypi.org/debian/pool/main/${pkgname::1}/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+sha256sums=('26fff979d050b7e1eb958b7d2bf945c9ee37b538c0deccae22dd17448cae04dd')
+
+package() {
+   mkdir -p "${pkgdir}/usr/share/${pkgname}"
+   cp -rv "${srcdir}/pixel-wallpaper"/*.{jpg,png} "${pkgdir}/usr/share/${pkgname}"
+}

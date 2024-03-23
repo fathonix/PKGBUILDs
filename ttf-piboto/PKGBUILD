@@ -1,0 +1,16 @@
+pkgname=ttf-piboto
+debname=fonts-piboto
+pkgver=1.2
+pkgrel=1
+pkgdesc='Raspberry Pi Desktop default font'
+arch=('any')
+url='https://android.googlesource.com/platform/frameworks/base/'
+license=('APACHE')
+provides=('ttf-font')
+source=("http://archive.raspberrypi.org/debian/pool/main/${debname::1}/${debname}/${debname}_${pkgver}.tar.xz")
+sha256sums=('69a4ae63a0338e3b33c83c01d5a453efdcd727b0775895dc7fb0db75d2d2f2e0')
+
+package() {
+   mkdir -p "${pkgdir}/usr/share/fonts/truetype/piboto"
+   cp -rv "${srcdir}/${debname}-${pkgver}"/Piboto*.ttf "${pkgdir}/usr/share/fonts/truetype/piboto/"
+}

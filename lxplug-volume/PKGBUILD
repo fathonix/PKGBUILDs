@@ -1,0 +1,27 @@
+pkgname=lxplug-volume
+pkgver=0.28
+pkgrel=1
+pkgdesc='Plugin for lxpanel to control volume for ALSA and Bluetooth devices'
+arch=('aarch64')
+url='http://raspberrypi.org'
+license=('GPL2')
+depends=('gtk3' 'lxpanel-gtk3' 'lxmenu-data' 'libfm-gtk3')
+makedepends=('intltool' 'libwnck3')
+source=("http://archive.raspberrypi.org/debian/pool/main/${pkgname::1}/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+sha256sums=('80e4e9ef5c1521090822db314dbd369a6f2b187ddc66b546e45521d25a233372')
+
+prepare() {
+   cd "${srcdir}/${pkgname}"
+   ./autogen.sh
+   ./configure --prefix=/usr
+}
+
+build () {
+   cd "${srcdir}/${pkgname}"
+   make
+}
+
+package() {
+   cd "${srcdir}/${pkgname}"
+   make DESTDIR="${pkgdir}" install
+}

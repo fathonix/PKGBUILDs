@@ -1,0 +1,15 @@
+pkgname=pipanel
+pkgver=1.12
+pkgrel=1
+pkgdesc='Config to customise the LXDE UI for the Raspberry Pi'
+arch=('any')
+url='http://raspberrypi.org'
+license=('GPL2')
+source=("http://archive.raspberrypi.org/debian/pool/main/r/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+sha256sums=('0b0ca2eed732a1111710a2f205654e7a2840a527885eb23fc4b6ac9e58d431fe')
+
+package() {
+   mkdir -p "${pkgdir}/usr" "${pkgdir}/etc"
+   cp -rv "${srcdir}/raspberrypi-ui-mods/usr/share" "${pkgdir}/usr/"
+   cp -rv "${srcdir}/raspberrypi-ui-mods/etc/xdg" "${pkgdir}/etc/"
+}

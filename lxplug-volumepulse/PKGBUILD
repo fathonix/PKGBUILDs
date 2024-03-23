@@ -1,0 +1,27 @@
+pkgname=lxplug-volumepulse
+pkgver=0.8
+pkgrel=1
+pkgdesc='PulseAudio controller plugin for lxpanel'
+arch=('aarch64')
+url='http://raspberrypi.org'
+license=('GPL2')
+depends=('gtk3' 'lxpanel-gtk3' 'lxmenu-data' 'libfm-gtk3')
+makedepends=('intltool' 'libwnck3')
+source=("http://archive.raspberrypi.org/debian/pool/main/${pkgname::1}/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+sha256sums=('243c40b16a868be9a9b5697d5691686a8e8296c96d70aa1554c9774f01fedeea')
+
+prepare() {
+   cd "${srcdir}/${pkgname}"
+   ./autogen.sh
+   ./configure --prefix=/usr
+}
+
+build () {
+   cd "${srcdir}/${pkgname}"
+   make
+}
+
+package() {
+   cd "${srcdir}/${pkgname}"
+   make DESTDIR="${pkgdir}" install
+}

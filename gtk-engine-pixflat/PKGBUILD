@@ -1,0 +1,27 @@
+pkgname=gtk-engine-pixflat
+debname=gtk2-engines-pixflat
+pkgver=0.3
+pkgrel=1
+pkgdesc='PiXflat theme engine for GTK+ 2.x'
+arch=('aarch64')
+url='http://raspberrypi.org'
+license=('GPL2')
+depends=('gtk2')
+makedepends=('intltool' 'perl-xml-parser')
+source=("http://archive.raspberrypi.org/debian/pool/main/${debname::1}/${debname}/${debname}_${pkgver}.tar.xz")
+sha256sums=('5d240b6496d7fc7c3b515bfa91ea176f095610a7280f41d28673f011449a2c0c')
+
+prepare() {
+   cd "${srcdir}/${debname}"
+   ./configure --prefix=/usr --libdir=/usr/lib
+}
+
+build () {
+   cd "${srcdir}/${debname}"
+   make
+}
+
+package() {
+   cd "${srcdir}/${debname}"
+   make DESTDIR="${pkgdir}" install
+}

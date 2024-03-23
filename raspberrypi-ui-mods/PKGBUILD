@@ -1,0 +1,25 @@
+pkgname=raspberrypi-ui-mods
+pkgver=1.20201210
+pkgrel=1
+pkgdesc='Config to customise the LXDE UI for the Raspberry Pi'
+arch=('any')
+url='http://raspberrypi.org'
+license=('GPL2')
+depends=('lxpanel-gtk3' 'lxsession-gtk3' 'openbox' 'gtk-engine-clearlookspix' 'gtk-engine-pixflat' 'gdk-pixbuf2' 'scrot' 'pishutdown')
+optdepends=('rpd-wallpaper: Wallpapers for Raspberry Pi Desktop'
+            'pixflat-icon-theme: Icons for Raspberry Pi Desktop'
+            'ttf-piboto: Raspberry Pi Desktop Default Font'
+            'pcmanfm-gtk3: Raspberry Pi Desktop Default File Manager')
+source=("http://archive.raspberrypi.org/debian/pool/main/${pkgname::1}/${pkgname}/${pkgname}_${pkgver}.tar.xz")
+sha256sums=('0b0ca2eed732a1111710a2f205654e7a2840a527885eb23fc4b6ac9e58d431fe')
+
+package() {
+   mkdir -p "${pkgdir}/usr/share/xsessions" "${pkgdir}/usr/bin" "${pkgdir}/etc"
+   cp -rv "${srcdir}/${pkgname}/usr/share" "${pkgdir}/usr/"
+   cp -rv "${srcdir}/${pkgname}/etc/xdg" "${pkgdir}/etc/"
+   printf '#!/bin/sh\n\nexec openbox --config-file $XDG_CONFIG_HOME/openbox/lxde-pi-rc.xml $@' > "${pkgdir}/usr/bin/openbox-lxde-pi"
+   printf '#!/bin/sh\n\nexec /usr/bin/lxsession -s LXDE-pi -e LXDE' > "${pkgdir}/usr/bin/startlxde-pi"
+   printf '[Desktop Entry]\nName=PIXEL\nComment=PIXEL Desktop\nExec=/usr/bin/startlxde-pi\nType=Application' > "${pkgdir}/usr/share/xsessions/PIXEL.desktop"
+   chmod 755 "${pkgdir}/usr/bin/openbox-lxde-pi"
+   chmod 755 "${pkgdir}/usr/bin/startlxde-pi"
+}

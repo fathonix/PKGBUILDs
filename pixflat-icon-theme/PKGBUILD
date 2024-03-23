@@ -1,0 +1,15 @@
+pkgname=pixflat-icon-theme
+debname=pixflat-icons
+pkgver=0.5
+pkgrel=1
+pkgdesc='Icons for Raspberry Pi Desktop'
+arch=('any')
+url='http://raspberrypi.org'
+license=('GPL2')
+source=("http://archive.raspberrypi.org/debian/pool/main/${debname::1}/${debname}/${debname}_${pkgver}.tar.xz")
+sha256sums=('794b7d9cffa702a40cf60f8c8b19a21a9a510ecc6a84738342b0675d060e8be0')
+
+package() {
+   mkdir -p "${pkgdir}/usr/share/icons"
+   cp -rv "${srcdir}/${debname}/PiXflat" "${pkgdir}/usr/share/icons/"
+}
